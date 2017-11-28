@@ -19,10 +19,17 @@ public class TestXMLIni {
 
 	public static RobotMap robotMap;
 	public static SomeSystem aSystem;
+	private static String fileName;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		robotMap = new RobotMap();
+		if ( args.length > 0 ) {
+			fileName = args[0];
+			System.out.println("filename: " + fileName);
+		} else {
+			fileName = "";
+		}
+		robotMap = new RobotMap(fileName);
 		aSystem = new SomeSystem();
 		
 		

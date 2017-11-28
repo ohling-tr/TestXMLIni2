@@ -24,9 +24,11 @@ public class RobotMap {
 	private XPath m_xPath;
 	private boolean m_IsDashboardTest;
 	
-	public RobotMap() {
+	public RobotMap(String fileName) {
 		
-		mIniFile = "D:\\robot.ini";
+		System.out.println("robotMap fileName: " + fileName);
+//		mIniFile = "D:\\robot.ini";
+		mIniFile = fileName;
 
 		try {
 	         File inputFile = new File(mIniFile);
