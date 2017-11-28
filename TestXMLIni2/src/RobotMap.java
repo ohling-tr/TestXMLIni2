@@ -57,24 +57,7 @@ public class RobotMap {
 	}
 	
 	public double getPIDP(String pidName, double PIDPVal) {
-		
-		try {
-	         String expression = "/robot/pid[@pidcontroller='" + pidName + "']";
-	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);
-	         for (int i = 0; i < nodeList.getLength(); i++) {
-	             Node nNode = nodeList.item(i);
-	             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-	                Element eElement = (Element) nNode;
-	                try {
-	                	PIDPVal = Double.valueOf(eElement.getElementsByTagName("p").item(0).getTextContent());
-	                } catch(Exception e) {
-	                }
-	             } 
-	          }
-		} catch (XPathExpressionException e) {
-	    }
-		
-		return PIDPVal;
+		return getNodeChildDVal("pid", "pidcontroller", pidName, "p", PIDPVal);
 	}
 	
 	public double getPIDI(String pidName) {
@@ -82,24 +65,7 @@ public class RobotMap {
 	}
 	
 	public double getPIDI(String pidName, double PIDIVal) {
-		
-		try {
-	         String expression = "/robot/pid[@pidcontroller='" + pidName + "']";
-	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);	         
-	         for (int i = 0; i < nodeList.getLength(); i++) {
-	             Node nNode = nodeList.item(i);	             
-	             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-	                Element eElement = (Element) nNode;
-	                try {
-	                	PIDIVal = Double.valueOf(eElement.getElementsByTagName("i").item(0).getTextContent());
-	                } catch(Exception e) {            	
-	                }	                
-	             } 
-	          }
-		} catch (XPathExpressionException e) {
-	    }
-		
-		return PIDIVal;
+		return getNodeChildDVal("pid", "pidcontroller", pidName, "i", PIDIVal);
 	}
 	
 	public double getPIDD(String pidName) {
@@ -107,24 +73,7 @@ public class RobotMap {
 	}
 	
 	public double getPIDD(String pidName, double PIDDVal) {
-		
-		try {
-	         String expression = "/robot/pid[@pidcontroller='" + pidName + "']";
-	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);	         
-	         for (int i = 0; i < nodeList.getLength(); i++) {
-	             Node nNode = nodeList.item(i);	             
-	             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-	                Element eElement = (Element) nNode;
-	                try {
-	                	PIDDVal = Double.valueOf(eElement.getElementsByTagName("d").item(0).getTextContent());
-	                } catch(Exception e) {            	
-	                }	                
-	             } 
-	          }
-		} catch (XPathExpressionException e) {
-	    }
-		
-		return PIDDVal;
+		return getNodeChildDVal("pid", "pidcontroller", pidName, "d", PIDDVal);
 	}
 	
 	public int getSpeedControllerPort(String speedController) {
@@ -175,18 +124,28 @@ public class RobotMap {
 	}
 	
 	public Integer getNodeChildIVal(String argNode, String nodeName, String nodeValue, String tagName) {
-		int iPort = -1;
+		int iVal = -1;
 		try {
-        	iPort = Integer.valueOf(getNodeChildSVal(argNode, nodeName, nodeValue, tagName));
+        	iVal = Integer.valueOf(getNodeChildSVal(argNode, nodeName, nodeValue, tagName));
         } catch(Exception e) {            	
         }	
-		return iPort;
+		return iVal;
 	}
+	
+	public double getNodeChildDVal(String argNode, String nodeName, String nodeValue, String tagName, double dDflt) {	
+		double dVal = dDflt;
+		try {
+        	dVal = Double.valueOf(getNodeChildSVal(argNode, nodeName, nodeValue, tagName));
+        } catch(Exception e) {            	
+        }	
+		return dVal;
+	}
+	
 	public String getNodeChildSVal(String argNode, String nodeName, String nodeValue, String tagName) {
 		String nodeChildVal = "";
 		try {
 	         String expression = "/robot/" + argNode + "[@" + nodeName + "='" + nodeValue + "']";
-	         System.out.println("searchExpr: " + expression + tagName);
+//	         System.out.println("searchExpr: " + expression + tagName);
 	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);	         
 	         for (int i = 0; i < nodeList.getLength(); i++) {
 	             Node nNode = nodeList.item(i);	             
