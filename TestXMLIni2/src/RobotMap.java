@@ -23,11 +23,13 @@ public class RobotMap {
 	private Document mIniDoc;
 	private XPath m_xPath;
 	private boolean m_IsDashboardTest;
+	private String rootPath;
 	
 	public RobotMap(String fileName) {
 		
 //		mIniFile = "D:\\robot.ini";
 		mIniFile = fileName;
+		rootPath = "/robot";
 
 		try {
 	         File inputFile = new File(mIniFile);
@@ -145,7 +147,7 @@ public class RobotMap {
 	public String getNodeChildSVal(String argNode, String nodeName, String nodeValue, String tagName) {
 		String nodeChildVal = "";
 		try {
-	         String expression = "/robot/" + argNode + "[@" + nodeName + "='" + nodeValue + "']";
+	         String expression = rootPath + "/" + argNode + "[@" + nodeName + "='" + nodeValue + "']";
 //	         System.out.println("searchExpr: " + expression + tagName);
 	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);	         
 	         for (int i = 0; i < nodeList.getLength(); i++) {
