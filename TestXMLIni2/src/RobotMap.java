@@ -26,7 +26,6 @@ public class RobotMap {
 	
 	public RobotMap(String fileName) {
 		
-		System.out.println("robotMap fileName: " + fileName);
 //		mIniFile = "D:\\robot.ini";
 		mIniFile = fileName;
 

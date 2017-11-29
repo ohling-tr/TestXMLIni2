@@ -25,7 +25,6 @@ public class TestXMLIni {
 		// TODO Auto-generated method stub
 		if ( args.length > 0 ) {
 			fileName = args[0];
-			System.out.println("filename: " + fileName);
 		} else {
 			fileName = "";
 		}
