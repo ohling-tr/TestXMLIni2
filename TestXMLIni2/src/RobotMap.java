@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
@@ -147,21 +148,32 @@ public class RobotMap {
 	public String getNodeChildSVal(String argNode, String nodeName, String nodeValue, String tagName) {
 		String nodeChildVal = "";
 		try {
-	         String expression = rootPath + "/" + argNode + "[@" + nodeName + "='" + nodeValue + "']";
-//	         System.out.println("searchExpr: " + expression + tagName);
+			String expression = rootPath + "/" + argNode + "[@" + nodeName + "='" + nodeValue + "']/" + tagName + "/text()";
+//	         System.out.println("searchExpr: " + expression);
 	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);	         
 	         for (int i = 0; i < nodeList.getLength(); i++) {
-	             Node nNode = nodeList.item(i);	             
-	             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-	                Element eElement = (Element) nNode;
-	                try {
-	                	nodeChildVal = eElement.getElementsByTagName(tagName).item(0).getTextContent();
-	                } catch(Exception e) {            	
-	                }	                
-	             } 
+	        	 System.out.println("extended version: " + nodeList.item(i).getNodeValue());
+	        	 nodeChildVal = nodeList.item(i).getNodeValue();
 	          }
 		} catch (XPathExpressionException e) {
 	    }
+		
+//		try {
+//	         String expression = rootPath + "/" + argNode + "[@" + nodeName + "='" + nodeValue + "']";
+//	         System.out.println("searchExpr: " + expression + tagName);
+//	         NodeList nodeList = (NodeList) m_xPath.compile(expression).evaluate(mIniDoc, XPathConstants.NODESET);	         
+//	         for (int i = 0; i < nodeList.getLength(); i++) {
+//	             Node nNode = nodeList.item(i);	             
+//	             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//	                Element eElement = (Element) nNode;
+//	                try {
+//	                	nodeChildVal = eElement.getElementsByTagName(tagName).item(0).getTextContent();
+//	                } catch(Exception e) {            	
+//	                }	                
+//	             } 
+//	          }
+//		} catch (XPathExpressionException e) {
+//	    }
 		return nodeChildVal;
 	}
 }
